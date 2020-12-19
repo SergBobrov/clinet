@@ -1,38 +1,57 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {ErrorMessage, Field, FieldArray, Form, Formik} from "formik";
 import Button from "@material-ui/core/Button";
 import {Delete} from "@material-ui/icons";
-import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
+import axios from 'axios';
 
 const initialValues = {
-    mail: '',
+    email: 'test@mail.ru',
     description: [
         {
-            title: '',
-            price: '',
+            title: 'test',
+            price: '10',
         },
     ],
 };
 
 export const InvoiceForm = () => {
-    const onSubmitHandler = (values) => {
-        alert(JSON.stringify(values, null, 2));
-    }
+
+    let sendDataToServer;
+
+    useEffect(() => {
+        sendDataToServer = (invoiceData) => {
+            axios.post('/api/invoice', invoiceData, {
+                withCredentials: true,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(
+                () => {
+                    console.log('success')
+                }
+            ).catch((e) => {
+                console.log(e);
+            })
+        }
+    }, [])
+
 
     return (
         <div>
             <Formik
                 initialValues={initialValues}
-                onSubmit={async (values) => {
-                    await onSubmitHandler(values)
+                onSubmit={async (values, {resetForm}) => {
+                    await sendDataToServer(JSON.stringify(values))
+                    console.log(values);
+                    resetForm({})
                 }}
             >
                 {({values}) => (
                     <Form>
                         <Field
                             type="email"
-                            name="mail"
+                            name="email"
                             placeholder="Email"
                             style={{marginBottom: "10px"}}
                         />
