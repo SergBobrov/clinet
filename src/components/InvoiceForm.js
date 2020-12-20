@@ -6,7 +6,7 @@ import Paper from "@material-ui/core/Paper";
 import axios from 'axios';
 
 const initialValues = {
-    email: 'test@mail.ru',
+    email: 'test1@test.ru',
     description: [
         {
             title: 'test',
@@ -20,19 +20,19 @@ export const InvoiceForm = () => {
     let sendDataToServer;
 
     useEffect(() => {
-        sendDataToServer = (invoiceData) => {
-            axios.post('/api/invoice', invoiceData, {
-                withCredentials: true,
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(
-                () => {
-                    console.log('success')
-                }
-            ).catch((e) => {
-                console.log(e);
-            })
+        sendDataToServer = async (invoiceData) => {
+            try {
+                const response = await axios.post('/api/invoice', invoiceData, {
+                    withCredentials: true,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+            } catch (error) {
+                alert(error.message)
+            }
+
+
         }
     }, [])
 
@@ -43,7 +43,6 @@ export const InvoiceForm = () => {
                 initialValues={initialValues}
                 onSubmit={async (values, {resetForm}) => {
                     await sendDataToServer(JSON.stringify(values))
-                    console.log(values);
                     resetForm({})
                 }}
             >
