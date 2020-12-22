@@ -6,11 +6,11 @@ import Paper from "@material-ui/core/Paper";
 import axios from 'axios';
 
 const initialValues = {
-    email: 'sergeibobrov92@gmail.com',
+    email: '',
     description: [
         {
-            title: 'test test',
-            price: '1111',
+            title: '',
+            price: '',
         },
     ],
 };
