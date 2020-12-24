@@ -1,4 +1,3 @@
-import React, {useEffect} from 'react'
 import {ErrorMessage, Field, FieldArray, Form, Formik} from "formik";
 import Button from "@material-ui/core/Button";
 import {Delete} from "@material-ui/icons";
@@ -6,11 +5,11 @@ import Paper from "@material-ui/core/Paper";
 import axios from 'axios';
 
 const initialValues = {
-    email: '',
+    email: 'naik-92@inbox.ru',
     description: [
         {
-            title: '',
-            price: '',
+            title: 'test',
+            price: '2500',
         },
     ],
 };
